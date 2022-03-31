@@ -2,19 +2,15 @@ version: '2'
 services:
   zoo1:
     image: zookeeper:3.4.9
-    container_name: zoo1
     restart: always
     ports:
-      - '2181:2181'
+      - 2181
     volumes: 
       - ./zoo/data:/var/lib/zookeeper/data
       - ./zoo/log:/var/lib/zookeeper/log
     environment:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=zoo1:2888:3888
-      ALLOW_ANONYMOUS_LOGIN: yes
-    networks:
-      - kafka-cluster
 
   nifi-seed:
     container_name: nifi-cluster-seed
@@ -35,80 +31,3 @@ services:
       - ./nifi_state:/data/nifi/state
     depends_on:
       - nifi-seed
-      
-  kafka1:
-    image: bitnami/kafka:2.7.0
-    container_name: kafka1
-    ports:
-      - '9093:9093'
-    environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zoo1:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
-      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka1:9092,EXTERNAL://localhost:9093
-      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
-      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
-    volumes: 
-      - ./broker/data:/var/lib/kafka/data
-    depends_on:
-      - zoo1
-    networks:
-      - kafka-cluster
-
-  kafka2:
-    image: bitnami/kafka:2.7.0
-    container_name: kafka2
-    ports:
-      - '9094:9094'
-    environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zoo1:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
-      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9094
-      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka2:9092,EXTERNAL://localhost:9094
-      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
-      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
-    volumes: 
-      - ./broker/data:/var/lib/kafka/data
-    depends_on:
-      - zoo1
-    networks:
-      - kafka-cluster
-
-  kafka3:
-    image: bitnami/kafka:2.7.0
-    container_name: kafka3
-    ports:
-      - '9095:9095'
-    environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zoo1:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
-      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9095
-      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka3:9092,EXTERNAL://localhost:9095
-      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
-      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
-    volumes: 
-      - ./broker/data:/var/lib/kafka/data
-    depends_on:
-      - zoo1
-    networks:
-      - kafka-cluster
-
-  kafdrop:
-    image: obsidiandynamics/kafdrop:latest
-    container_name: kafdrop
-    ports:
-      - 9000:9000
-    environment:
-      - KAFKA_BROKERCONNECT=kafka1:9092,kafka2:9092,kafka3:9092
-    depends_on:
-      - kafka1
-    networks:
-      - kafka-cluster
-
-networks:
-  kafka-cluster:
-    name: kafka-cluster
-    driver: bridge
