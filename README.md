@@ -35,6 +35,8 @@ $ docker-compose up -d
 # Then access to the seed node's url through docker-machine vm
 $ docker-machine ip
 192.168.99.100
+```
+
 
 **---------------------------vip-------------------------**
 **HTTP**
@@ -43,6 +45,7 @@ $ docker-machine ip
 
 **http://192.168.99.100:8080/nifi/**
 
+```Shell
 # You may need to add routing by a command something like this:
 $ sudo route add -net 172.17.0.0 `docker-machine ip`
 
