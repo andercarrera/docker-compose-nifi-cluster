@@ -103,3 +103,8 @@ services:
       - kafka1
     networks:
       - kafka-cluster
+
+networks:
+  kafka-cluster:
+    name: kafka-cluster
+    driver: bridge
