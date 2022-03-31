@@ -2,15 +2,19 @@ version: '2'
 services:
   zoo1:
     image: zookeeper:3.4.9
+    container_name: zoo1
     restart: always
     ports:
-      - 2181
+      - '2181:2181'
     volumes: 
       - ./zoo/data:/var/lib/zookeeper/data
       - ./zoo/log:/var/lib/zookeeper/log
     environment:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=zoo1:2888:3888
+      ALLOW_ANONYMOUS_LOGIN: yes
+    networks:
+      - kafka-cluster
 
   nifi-seed:
     container_name: nifi-cluster-seed
