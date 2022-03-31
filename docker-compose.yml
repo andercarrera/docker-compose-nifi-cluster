@@ -38,7 +38,7 @@ services:
     ports:
       - '9093:9093'
     environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zoo1:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
       - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
@@ -48,7 +48,7 @@ services:
     volumes: 
       - ./broker/data:/var/lib/kafka/data
     depends_on:
-      - zookeeper
+      - zoo1
     networks:
       - kafka-cluster
 
@@ -58,7 +58,7 @@ services:
     ports:
       - '9094:9094'
     environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zoo1:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
       - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9094
@@ -68,7 +68,7 @@ services:
     volumes: 
       - ./broker/data:/var/lib/kafka/data
     depends_on:
-      - zookeeper
+      - zoo1
     networks:
       - kafka-cluster
 
@@ -78,7 +78,7 @@ services:
     ports:
       - '9095:9095'
     environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zoo1:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
       - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9095
@@ -88,7 +88,7 @@ services:
     volumes: 
       - ./broker/data:/var/lib/kafka/data
     depends_on:
-      - zookeeper
+      - zoo1
     networks:
       - kafka-cluster
 
