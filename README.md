@@ -36,7 +36,12 @@ $ docker-compose up -d
 $ docker-machine ip
 192.168.99.100
 
-http://192.168.99.100:8080/nifi/
+**---------------------------vip-------------------------**
+**HTTP**
+**-------------------------------------------------------**
+
+
+**http://192.168.99.100:8080/nifi/**
 
 # You may need to add routing by a command something like this:
 $ sudo route add -net 172.17.0.0 `docker-machine ip`
