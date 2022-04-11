@@ -1,4 +1,4 @@
-FROM mkobit/nifi:1.0.0-openjdk-8
+FROM mkobit/nifi
 ADD ./nifi.properties conf
 ADD ./start-nifi.sh .
 
