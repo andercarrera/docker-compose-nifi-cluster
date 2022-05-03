@@ -22,6 +22,8 @@ services:
       NIFI_CLUSTER_IS_NODE: 'true'
       NIFI_CLUSTER_NODE_PROTOCOL_PORT: 9998
       NIFI_ELECTION_MAX_WAIT: 1 min
+    volumes:
+      - ./spark-config:/spark-config
   nifi-2:
     image: apache/nifi:1.15.0
     container_name: nifi-2
@@ -35,3 +37,5 @@ services:
       NIFI_CLUSTER_IS_NODE: 'true'
       NIFI_CLUSTER_NODE_PROTOCOL_PORT: 9998
       NIFI_ELECTION_MAX_WAIT: 1 min
+    volumes:
+      - ./spark-config:/spark-config
